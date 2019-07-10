@@ -1,0 +1,8 @@
+{
+    "apiPort": 8090,
+    "hibp": {
+        "url": "https://haveibeenpwned.com/api/v2",
+        "accounts": "breachedaccount",
+        "pastes": "pasteaccount"
+    }
+}
