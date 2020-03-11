@@ -16,15 +16,17 @@ api.get("/api/:version/breach/:email", function (req, res) {
         json: true,
         headers: { 'User-Agent': 'hibpclient' }
     }, function (error, response, body) {
-        if (response.statusCode != 200)
-            res.status(response.statusCode).send({
+        if (response.statusCode != 200){
+            var hipbError = {
                 "error": `API call Error: ${response.statusMessage}`,
                 "response": response.toJSON()
-            });
-        else if (error)
+            };
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({"error": `API call error`, "source": "https://haveibeenpwned.com/"});
+            log.error(hipbError);
+        } else if (error)
             res.status(HttpStatus.BAD_REQUEST).send({ "error": error });
         else
-            res.status(HttpStatus.OK).send({ breaches: body });
+            res.status(HttpStatus.OK).send({ breaches: body, source: "https://haveibeenpwned.com" });
     });
 });
 
